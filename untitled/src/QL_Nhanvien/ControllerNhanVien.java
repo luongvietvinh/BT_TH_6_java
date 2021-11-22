@@ -41,67 +41,90 @@ public class ControllerNhanVien {
         listNV = newArrNV;
     }
 
-    public static void showNhanVien(int choice) {
-        if (choice == 1)
-
+    public static void showNhanVien(boolean isKySu) {
+        if (isKySu) {
             for (NhanVien nv : listNV) {
-                if (nv instanceof CongNhan) {
+                if (nv instanceof KySu)
                     System.out.println(nv.toString());
-                } else if (choice == 2) {
-                    for (NhanVien nv2 : listNV) {
-                        if (nv2 instanceof KySu)
-                            System.out.println(nv2.toString());
-
-                    }
-                }
             }
-
+        } else {
+            for (NhanVien nv : listNV) {
+                if (!(nv instanceof KySu))
+                    System.out.println(nv.toString());
+            }
+        }
     }
-
-    public static void searchNhanVien(NhanVien[] listNV) {
+    // tìm kiêm nhân viên
+    public static NhanVien searchNhanVien(NhanVien[] listNV) {
         System.out.println("nhập tên nhân viên");
         String name = scanner.nextLine();
+        for (int i = 0; i < ControllerNhanVien.listNV.length; i++) {
+            if (ControllerNhanVien.listNV[i].getName().equals(name))
+                return ControllerNhanVien.listNV[i];
+        }
 
-        boolean check = false;
+
+        return null;
+    }
+
+    // xóa nhân viên
+    public static NhanVien[] deleteNhanvien() {
+        System.out.println("nhập tên nhân viên cần xóa");
+        String name = scanner.nextLine();
+        int index = 0;
+        NhanVien[] newnhanViens = new NhanVien[listNV.length - 1];
         for (int i = 0; i < listNV.length; i++) {
-            if (name.equals(listNV[i].getName())) {
-                System.out.println(listNV[i]);
-                check = true;
-                break;
+            if (listNV[i].getName().equals(name))
+                index = i;
+        }
+        for (int i = 0; i < listNV.length - 1; i++) {
+            if (i > index) {
+                newnhanViens[i] = listNV[i];
             } else {
-                check = false;
+                newnhanViens[i] = listNV[i + 1];
             }
         }
-        if (!check) {
-            System.out.println("không tìm thấy tên nhân viên");
-        }
+        listNV = newnhanViens;
+        return newnhanViens;
     }
+    // sửa tên theo tên;
 
-    public static NhanVien[] deleteNhanVien(NhanVien[] listNV) {
-        System.out.println("nhập tên nhân viên muốn xóa");
-        int id = scanner.nextInt();
-        int index = 0;
-
+    public static NhanVien[] editNhanVien() {
+        System.out.println("nhập tên muôn sửa");
+        String name = scanner.nextLine();
+        System.out.println("nhập tên mới");
+        String newname = scanner.nextLine();
+        System.out.println("nhập dịa chỉ mới");
+        String newAddress = scanner.nextLine();
+        System.out.println("nhập tuổi mới");
+        int newage = scanner.nextInt();
+        System.out.println("nhập workingDay");
+        double newWorkingDay = Double.parseDouble(scanner.nextLine());
+        System.out.println("nhập new Salary");
+        double salary = Double.parseDouble(scanner.nextLine());
         for (int i = 0; i < listNV.length; i++) {
-            if (id == listNV.length) ;
-            index = i;
-            break;
+            if (listNV[i].getName().equals(name)) {
+                listNV[i].setName(newname);
+                listNV[i].setAddress(newAddress);
+                listNV[i].setAge(newage);
+                listNV[i].setWorkingDay(newWorkingDay);
+                listNV[i].setSalary(salary);
+            }
         }
-    NhanVien[] newnhanvien = new NhanVien[listNV.length -1];
-        for (int i = index; i < listNV.length -1; i++) {
-            listNV[i] = listNV[i + 1];
-        }
-        for (NhanVien x: newnhanvien
-             ) {
-            System.out.println(x.toString());
-        }
-        return newnhanvien;
+        return listNV;
     }
-    public static void showAllNv() {
-        for (NhanVien nv: listNV ) {
-            System.out.println(nv);
+    //sắp xếp nhân viên
+    public static NhanVien[] sortByName() {
+        NhanVien temp;
+        for (int i = 0; i < listNV.length - 1; i++) {
+            for (int j = i + 1; j < listNV.length; j++) {
+                if ((listNV[i].getName()).charAt(0) > (listNV[j].getName()).charAt(0)) {
+                    temp = listNV[i];
+                    listNV[i] = listNV[j];
+                    listNV[j] = temp;
+                }
+            }
         }
+        return listNV;
     }
-
-
 }

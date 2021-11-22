@@ -23,8 +23,8 @@ public class MainNhanVien {
 
             switch (choice) {
                 case 1:
-                    System.out.println("1. Công nhân");
-                    System.out.println("2. Kỹ sư");
+                    System.out.println("1. Kỹ sư");
+                    System.out.println("2. Công nhân");
                     choice = Integer.parseInt(scanner.nextLine());
                     switch (choice) {
                         case 1:
@@ -39,11 +39,13 @@ public class MainNhanVien {
                     }
                     break;
                 case 2:
-                        ControllerNhanVien.searchNhanVien(ControllerNhanVien.listNV);
-                        break;
-                case 3:
-                    ControllerNhanVien.deleteNhanVien(ControllerNhanVien.listNV);
+                    ControllerNhanVien.searchNhanVien(ControllerNhanVien.listNV);
                     break;
+                case 3:
+                    ControllerNhanVien.deleteNhanvien();
+                    break;
+                case 4:
+                    ControllerNhanVien.editNhanVien();
 
 
                 case 5:
@@ -53,14 +55,15 @@ public class MainNhanVien {
                     choice = Integer.parseInt(scanner.nextLine());
                     switch (choice) {
                         case 1:
-                           ControllerNhanVien.showNhanVien(1);
-                           break;
-
-                        case 2:
-                           ControllerNhanVien.showNhanVien(2);
+                            ControllerNhanVien.showNhanVien(true);
                             break;
+                        case 2:
+                            ControllerNhanVien.showNhanVien(false);
                     }
-                    break;
+                case 6:
+                        ControllerNhanVien.sortByName();
+                case 7:
+                    System.exit(0);
             }
 
         }
